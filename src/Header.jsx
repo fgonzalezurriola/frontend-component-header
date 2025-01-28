@@ -128,6 +128,7 @@ const Header = ({
       <Responsive minWidth={769}>
         <DesktopHeaderSlot props={props} />
       </Responsive>
+      <button> test frontend component header </button>
     </>
   );
 };
