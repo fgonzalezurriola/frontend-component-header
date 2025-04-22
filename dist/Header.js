@@ -4,20 +4,20 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-import React, { useContext } from 'react';
-import Responsive from 'react-responsive';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
-import { APP_CONFIG_INITIALIZED, ensureConfig, mergeConfig, getConfig, subscribe } from '@edx/frontend-platform';
-import PropTypes from 'prop-types';
-import DesktopHeaderSlot from './plugin-slots/DesktopHeaderSlot';
-import MobileHeaderSlot from './plugin-slots/MobileHeaderSlot';
-import messages from './Header.messages';
-ensureConfig(['LMS_BASE_URL', 'LOGOUT_URL', 'LOGIN_URL', 'SITE_NAME', 'LOGO_URL', 'ORDER_HISTORY_URL'], 'Header component');
+import React, { useContext } from "react";
+import Responsive from "react-responsive";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { AppContext } from "@edx/frontend-platform/react";
+import { APP_CONFIG_INITIALIZED, ensureConfig, mergeConfig, getConfig, subscribe } from "@edx/frontend-platform";
+import PropTypes from "prop-types";
+import DesktopHeaderSlot from "./plugin-slots/DesktopHeaderSlot";
+import MobileHeaderSlot from "./plugin-slots/MobileHeaderSlot";
+import messages from "./Header.messages";
+ensureConfig(["LMS_BASE_URL", "LOGOUT_URL", "LOGIN_URL", "SITE_NAME", "LOGO_URL", "ORDER_HISTORY_URL"], "Header component");
 subscribe(APP_CONFIG_INITIALIZED, function () {
   mergeConfig({
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER
-  }, 'Header additional config');
+  }, "Header additional config");
 });
 
 /**
@@ -44,45 +44,45 @@ var Header = function Header(_ref) {
     authenticatedUser = _useContext.authenticatedUser,
     config = _useContext.config;
   var defaultMainMenu = [{
-    type: 'item',
+    type: "item",
     href: "".concat(config.LMS_BASE_URL, "/dashboard"),
-    content: intl.formatMessage(messages['header.links.courses'])
+    content: intl.formatMessage(messages["header.links.courses"])
   }];
   var defaultUserMenu = authenticatedUser === null ? [] : [{
-    heading: '',
+    heading: "",
     items: [{
-      type: 'item',
+      type: "item",
       href: "".concat(config.LMS_BASE_URL, "/dashboard"),
-      content: intl.formatMessage(messages['header.user.menu.dashboard'])
+      content: intl.formatMessage(messages["header.user.menu.dashboard"])
     }, {
-      type: 'item',
+      type: "item",
       href: "".concat(config.ACCOUNT_PROFILE_URL, "/u/").concat(authenticatedUser.username),
-      content: intl.formatMessage(messages['header.user.menu.profile'])
+      content: intl.formatMessage(messages["header.user.menu.profile"])
     }, {
-      type: 'item',
+      type: "item",
       href: config.ACCOUNT_SETTINGS_URL,
-      content: intl.formatMessage(messages['header.user.menu.account.settings'])
+      content: intl.formatMessage(messages["header.user.menu.account.settings"])
     }].concat(_toConsumableArray(config.ORDER_HISTORY_URL ? [{
-      type: 'item',
+      type: "item",
       href: config.ORDER_HISTORY_URL,
-      content: intl.formatMessage(messages['header.user.menu.order.history'])
+      content: intl.formatMessage(messages["header.user.menu.order.history"])
     }] : []), [{
-      type: 'item',
+      type: "item",
       href: config.LOGOUT_URL,
-      content: intl.formatMessage(messages['header.user.menu.logout'])
+      content: intl.formatMessage(messages["header.user.menu.logout"])
     }])
   }];
   var mainMenu = mainMenuItems || defaultMainMenu;
   var secondaryMenu = secondaryMenuItems || [];
   var userMenu = authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
   var loggedOutItems = [{
-    type: 'item',
+    type: "item",
     href: config.LOGIN_URL,
-    content: intl.formatMessage(messages['header.user.menu.login'])
+    content: intl.formatMessage(messages["header.user.menu.login"])
   }, {
-    type: 'item',
+    type: "item",
     href: "".concat(config.LMS_BASE_URL, "/register"),
-    content: intl.formatMessage(messages['header.user.menu.register'])
+    content: intl.formatMessage(messages["header.user.menu.register"])
   }];
   var props = {
     logo: config.LOGO_URL,
@@ -104,7 +104,7 @@ var Header = function Header(_ref) {
     minWidth: 769
   }, /*#__PURE__*/React.createElement(DesktopHeaderSlot, {
     props: props
-  })), /*#__PURE__*/React.createElement("button", null, " test frontend component header "));
+  })), /*#__PURE__*/React.createElement("button", null, " test frontend compoasdasdasdasdasdasddsnent header "));
 };
 Header.defaultProps = {
   mainMenuItems: null,
@@ -118,7 +118,7 @@ Header.propTypes = {
   userMenuItems: PropTypes.arrayOf(PropTypes.shape({
     heading: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.oneOf(['item', 'menu']),
+      type: PropTypes.oneOf(["item", "menu"]),
       href: PropTypes.string,
       content: PropTypes.string,
       isActive: PropTypes.bool
