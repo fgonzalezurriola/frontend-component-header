@@ -1,34 +1,40 @@
-import React, { useContext } from 'react';
-import Responsive from 'react-responsive';
-import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
+import React, { useContext } from "react";
+import Responsive from "react-responsive";
+import { injectIntl, intlShape } from "@edx/frontend-platform/i18n";
+import { AppContext } from "@edx/frontend-platform/react";
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
   mergeConfig,
   getConfig,
   subscribe,
-} from '@edx/frontend-platform';
+} from "@edx/frontend-platform";
 
-import PropTypes from 'prop-types';
-import DesktopHeaderSlot from './plugin-slots/DesktopHeaderSlot';
-import MobileHeaderSlot from './plugin-slots/MobileHeaderSlot';
+import PropTypes from "prop-types";
+import DesktopHeaderSlot from "./plugin-slots/DesktopHeaderSlot";
+import MobileHeaderSlot from "./plugin-slots/MobileHeaderSlot";
 
-import messages from './Header.messages';
+import messages from "./Header.messages";
 
-ensureConfig([
-  'LMS_BASE_URL',
-  'LOGOUT_URL',
-  'LOGIN_URL',
-  'SITE_NAME',
-  'LOGO_URL',
-  'ORDER_HISTORY_URL',
-], 'Header component');
+ensureConfig(
+  [
+    "LMS_BASE_URL",
+    "LOGOUT_URL",
+    "LOGIN_URL",
+    "SITE_NAME",
+    "LOGO_URL",
+    "ORDER_HISTORY_URL",
+  ],
+  "Header component"
+);
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
-  mergeConfig({
-    AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
-  }, 'Header additional config');
+  mergeConfig(
+    {
+      AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
+    },
+    "Header additional config"
+  );
 });
 
 /**
@@ -46,64 +52,82 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
  * @param {list} userMenuItems - The list of user menu items to display.
  * See the documentation for the structure of user menu item.
  */
-const Header = ({
-  intl, mainMenuItems, secondaryMenuItems, userMenuItems,
-}) => {
+const Header = ({ intl, mainMenuItems, secondaryMenuItems, userMenuItems }) => {
   const { authenticatedUser, config } = useContext(AppContext);
 
   const defaultMainMenu = [
     {
-      type: 'item',
+      type: "item",
       href: `${config.LMS_BASE_URL}/dashboard`,
-      content: intl.formatMessage(messages['header.links.courses']),
+      content: intl.formatMessage(messages["header.links.courses"]),
     },
   ];
-  const defaultUserMenu = authenticatedUser === null ? [] : [{
-    heading: '',
-    items: [
-      {
-        type: 'item',
-        href: `${config.LMS_BASE_URL}/dashboard`,
-        content: intl.formatMessage(messages['header.user.menu.dashboard']),
-      },
-      {
-        type: 'item',
-        href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
-        content: intl.formatMessage(messages['header.user.menu.profile']),
-      },
-      {
-        type: 'item',
-        href: config.ACCOUNT_SETTINGS_URL,
-        content: intl.formatMessage(messages['header.user.menu.account.settings']),
-      },
-      // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
-      ...(config.ORDER_HISTORY_URL ? [{
-        type: 'item',
-        href: config.ORDER_HISTORY_URL,
-        content: intl.formatMessage(messages['header.user.menu.order.history']),
-      }] : []),
-      {
-        type: 'item',
-        href: config.LOGOUT_URL,
-        content: intl.formatMessage(messages['header.user.menu.logout']),
-      },
-    ],
-  }];
+  const defaultUserMenu =
+    authenticatedUser === null
+      ? []
+      : [
+          {
+            heading: "",
+            items: [
+              {
+                type: "item",
+                href: `${config.LMS_BASE_URL}/dashboard`,
+                content: intl.formatMessage(
+                  messages["header.user.menu.dashboard"]
+                ),
+              },
+              {
+                type: "item",
+                href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
+                content: intl.formatMessage(
+                  messages["header.user.menu.profile"]
+                ),
+              },
+              {
+                type: "item",
+                href: config.ACCOUNT_SETTINGS_URL,
+                content: intl.formatMessage(
+                  messages["header.user.menu.account.settings"]
+                ),
+              },
+              // Users should only see Order History if have a ORDER_HISTORY_URL define in the environment.
+              ...(config.ORDER_HISTORY_URL
+                ? [
+                    {
+                      type: "item",
+                      href: config.ORDER_HISTORY_URL,
+                      content: intl.formatMessage(
+                        messages["header.user.menu.order.history"]
+                      ),
+                    },
+                  ]
+                : []),
+              {
+                type: "item",
+                href: config.LOGOUT_URL,
+                content: intl.formatMessage(
+                  messages["header.user.menu.logout"]
+                ),
+              },
+            ],
+          },
+        ];
 
   const mainMenu = mainMenuItems || defaultMainMenu;
   const secondaryMenu = secondaryMenuItems || [];
-  const userMenu = authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
+  const userMenu =
+    authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
 
   const loggedOutItems = [
     {
-      type: 'item',
+      type: "item",
       href: config.LOGIN_URL,
-      content: intl.formatMessage(messages['header.user.menu.login']),
+      content: intl.formatMessage(messages["header.user.menu.login"]),
     },
     {
-      type: 'item',
+      type: "item",
       href: `${config.LMS_BASE_URL}/register`,
-      content: intl.formatMessage(messages['header.user.menu.register']),
+      content: intl.formatMessage(messages["header.user.menu.register"]),
     },
   ];
 
@@ -128,7 +152,7 @@ const Header = ({
       <Responsive minWidth={769}>
         <DesktopHeaderSlot props={props} />
       </Responsive>
-      <button> test frontend component header </button>
+      <button> test frontend compoasdasdasdasdasdasddsnent header </button>
     </>
   );
 };
@@ -141,23 +165,21 @@ Header.defaultProps = {
 
 Header.propTypes = {
   intl: intlShape.isRequired,
-  mainMenuItems: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.array,
-  ]),
-  secondaryMenuItems: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.array,
-  ]),
-  userMenuItems: PropTypes.arrayOf(PropTypes.shape({
-    heading: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.oneOf(['item', 'menu']),
-      href: PropTypes.string,
-      content: PropTypes.string,
-      isActive: PropTypes.bool,
-    })),
-  })),
+  mainMenuItems: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
+  secondaryMenuItems: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
+  userMenuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      heading: PropTypes.string,
+      items: PropTypes.arrayOf(
+        PropTypes.shape({
+          type: PropTypes.oneOf(["item", "menu"]),
+          href: PropTypes.string,
+          content: PropTypes.string,
+          isActive: PropTypes.bool,
+        })
+      ),
+    })
+  ),
 };
 
 export default injectIntl(Header);
